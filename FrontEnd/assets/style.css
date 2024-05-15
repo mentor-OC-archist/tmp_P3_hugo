@@ -22,6 +22,8 @@ time, mark, audio, video {
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
+	background: #FFFEF8;
+
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
@@ -186,3 +188,35 @@ footer nav ul {
 	margin: 2em
 }
 
+#filter-container button {
+	justify-content: space-between;
+	white-space: nowrap;
+    color: #1D6154; 
+	background-color: #FFFEF8;
+    border: solid 1px #1D6154; 
+    padding: 10px 20px; 
+    margin-right: 10px; 
+    border-radius: 2em; 
+	font-weight: bold;
+	font: inherit;
+	gap: 5em;
+}
+
+#filter-container button:hover {
+	background-color: #1D6154;
+	color: #FFFEF8;
+
+}
+
+#filter-container button:active {
+	background-color: #1D6154;
+	color: #FFFEF8;
+
+}
+
+#filter-container {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 4em;
+	margin-top: 4em;
+}
