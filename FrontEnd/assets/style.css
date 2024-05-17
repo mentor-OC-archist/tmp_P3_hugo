@@ -55,6 +55,7 @@ body {
 	font-family: 'Work Sans' ;
 	font-size: 14px;
 }
+
 header {
 	display: flex;
 	justify-content: space-between;
@@ -202,12 +203,6 @@ footer nav ul {
 	gap: 5em;
 }
 
-#filter-container button:hover {
-	background-color: #1D6154;
-	color: #FFFEF8;
-
-}
-
 #filter-container button:active {
 	background-color: #1D6154;
 	color: #FFFEF8;
@@ -219,4 +214,92 @@ footer nav ul {
 	justify-content: center;
 	margin-bottom: 4em;
 	margin-top: 4em;
+}
+
+/* Style pour l'overlay de connexion */
+#loginOverlay {
+    display: none;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fond semi-transparent pour l'overlay */
+    z-index: 9999; /* Assurez-vous que l'overlay est au-dessus de tous les autres éléments */
+    justify-content: center;
+    align-items: center;
+}
+
+#loginFormContainer {
+    padding: 20px;
+    position: relative; /* Position relative pour permettre le positionnement des éléments fils */
+    z-index: 10000; /* Assurez-vous que le formulaire est au-dessus de l'overlay */
+}
+
+#loginFormContainer h2 {
+	text-align: center;
+	margin-bottom: 2em;
+}
+
+
+/* Style pour le formulaire de connexion */
+#loginForm {
+    display: flex;
+    flex-direction: column;
+}
+
+#loginForm label {
+    margin-bottom: 5px;
+	width: 35%;
+	align-self: center;
+}
+
+#loginForm input {
+    width: 33%;
+    padding: 15px;
+    margin-bottom: 10px;
+	align-self: center;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	border: none;
+}
+
+#loginForm button {
+	margin-top: 2em;
+    padding: 10px 20px;
+	width: 15%;
+    background-color: #1D6154;
+    color: white;
+    border: none;
+    border-radius: 2em;
+    cursor: pointer;
+	align-self: center;
+}
+
+#closeOverlay {
+    margin-top: 10px;
+    background-color: #dc3545;
+}
+
+a#forgotPassword {
+	align-self: center;
+	margin-top: 3em;
+	color: black;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+body.overlay-open {
+    overflow: hidden; /* Empêche le défilement lorsque l'overlay est ouvert */
+}
+
+/* Assurez-vous que le logo et les éléments li restent visibles */
+header, nav ul {
+    position: relative;
+    z-index: 10000; /* Assurez-vous que le logo et les éléments li sont au-dessus de l'overlay */
+}
+
+nav ul li a {
+	text-decoration: none;
+	color: inherit;
 }
