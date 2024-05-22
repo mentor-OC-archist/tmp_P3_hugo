@@ -111,6 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const loginSection = document.getElementById('loginOverlay');
     const closeOverlay = document.getElementById('closeOverlay');
     const loginButton = document.getElementById("loginButton");
+    
 
     function hidePageElements() {
         document.body.style.overflow = 'hidden';
@@ -130,11 +131,6 @@ document.addEventListener('DOMContentLoaded', () => {
         hidePageElements();
         loginSection.style.display = 'block';
         loginButton.classList.toggle('bold');
-    });
-
-    closeOverlay.addEventListener('click', () => {
-        loginSection.style.display = 'none';
-        showPageElements();
     });
 
     const loginForm = document.getElementById('loginForm');
