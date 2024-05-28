@@ -109,10 +109,8 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchCategories();
 
     const loginSection = document.getElementById('loginOverlay');
-    const closeOverlay = document.getElementById('closeOverlay');
     const loginButton = document.getElementById("loginButton");
     
-
     function hidePageElements() {
         document.body.style.overflow = 'hidden';
         document.querySelectorAll('main > section:not(#loginSection)').forEach(element => {
@@ -149,27 +147,22 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function activateEditMode() {
-        
         const editBanner = document.createElement('div');
         editBanner.id = 'editBanner';
         editBanner.textContent = 'Mode Édition';
         document.body.insertBefore(editBanner, document.body.firstChild);
 
-        
         const modifyButton = document.createElement('button');
         modifyButton.id = 'modifyButton';
         modifyButton.textContent = 'Modifier';
-        document.querySelector('header').appendChild(modifyButton);
+        document.getElementById('modifyButtonContainer').appendChild(modifyButton);
 
-        
         const filterContainer = document.getElementById('filter-container');
         filterContainer.style.display = 'none';
 
-        
         loginButton.textContent = 'logout';
         loginButton.classList.remove('bold');
 
-        
         loginButton.removeEventListener('click', showLoginOverlay);
         loginButton.addEventListener('click', logoutUser);
     }
@@ -182,5 +175,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function showLoginOverlay() {
         hidePageElements();
         loginSection.style.display = 'block';
+    }
+    
+    // Si l'utilisateur est déjà connecté, activer le mode édition
+    const authToken = localStorage.getItem('authToken');
+    if (authToken) {
+        activateEditMode();
     }
 });
