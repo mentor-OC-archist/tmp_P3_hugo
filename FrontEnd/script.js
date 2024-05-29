@@ -166,7 +166,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         editBanner.addEventListener('click', function() {
             document.getElementById('overlay').style.display = 'flex';
-            
         });
 
         modifyButton.addEventListener('click', function() {

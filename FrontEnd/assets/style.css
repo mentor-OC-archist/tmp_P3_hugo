@@ -258,6 +258,10 @@ footer nav ul {
 	border: none;
 }
 
+#loginButton {
+	cursor: pointer;
+}
+
 #loginForm button {
 	margin-top: 2em;
     padding: 10px 20px;
@@ -336,14 +340,17 @@ nav ul li a {
 }
 
 #overlay {
-    position: fixed; /* position fixe par rapport à la fenêtre */
-    top: 50%; /* positionnement vertical au milieu */
-    left: 50%; /* positionnement horizontal au milieu */
-    transform: translate(-50%, -50%); /* centrage de l'overlay */
-    background-color: rgba(0, 0, 0, 0.5);
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(0, 0, 0, 0.5); 
+    z-index: 1000; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    
 }
 
 #overlay-content {
@@ -360,17 +367,28 @@ nav ul li a {
 
 #addPhotoButton {
 	display: inline-flex;
+	flex-wrap: nowrap;
 	align-items: center;
 	justify-content: center;
+	border: none;
+	background-color: #1D6154;
+	color: #fff;
+	border-radius: 2em;
 	width: 100%;
+	cursor: pointer;
 
 }
 
 #closeOverlay{
-	position: fixed;
-	display: inline-flex;
-	right: 0;
-	top: 0;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
 	justify-content: end;
-
+	width: 100%;
+	padding: 0%;
+	cursor: pointer;
+	border: none;
+	background: none;
+	padding: 5px;
+	font-size: small;
 }
