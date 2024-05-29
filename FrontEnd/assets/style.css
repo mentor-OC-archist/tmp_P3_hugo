@@ -343,8 +343,6 @@ nav ul li a {
     position: fixed; 
     top: 0; 
     left: 0; 
-    width: 100%; 
-    height: 100%; 
     background-color: rgba(0, 0, 0, 0.5); 
     z-index: 1000; 
     display: flex; 
@@ -353,14 +351,15 @@ nav ul li a {
     
 }
 
-#overlay-content {
+#overlayContent {
+	display: grid;
     background-color: #fff;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
-#overlay-content h2 {
+#overlayContent h2 {
 	color: #000;
 
 }
@@ -379,16 +378,25 @@ nav ul li a {
 
 }
 
-#closeOverlay{
-	display: flex;
-	flex-direction: row;
-	flex-wrap: nowrap;
-	justify-content: end;
+hr {
 	width: 100%;
+}
+
+#closeOverlay{
 	padding: 0%;
 	cursor: pointer;
 	border: none;
 	background: none;
-	padding: 5px;
 	font-size: small;
+	justify-self: end;
+	align-self: end;
+}
+
+.card {
+	width: 10px; 
+    height: auto;
+}
+
+.card img {
+	width: 100%;
 }

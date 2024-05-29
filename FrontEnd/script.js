@@ -147,7 +147,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    function activateEditMode() {
+    async function renderWorksInOverlay(works, overlay) {
+        const overlayContent = document.getElementById('overlayContent');
+    
+        works.forEach(work => {
+            const card = createCardElement(work);
+            overlayContent.appendChild(card);
+        });
+    }
+
+    async function activateEditMode() {
         const editBanner = document.createElement('button'); // Modifier la création pour un bouton
         const icon = document.createElement('i');
         editBanner.id = 'editBanner';
@@ -163,6 +172,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
         const filterContainer = document.getElementById('filter-container');
         filterContainer.style.display = 'none';
+
+        const overlay = document.getElementById('overlay');
+        overlay.style.display = 'flex';
 
         editBanner.addEventListener('click', function() {
             document.getElementById('overlay').style.display = 'flex';
@@ -181,9 +193,33 @@ document.addEventListener('DOMContentLoaded', () => {
     
         loginButton.removeEventListener('click', showLoginOverlay);
         loginButton.addEventListener('click', logoutUser);
+        
+        try {
+            const response = await fetch(worksEndpoint);
+            const works = await response.json();
+            renderWorksInOverlay(works, overlay);
+        } catch (error) {
+            console.error('Erreur lors de la récupération des travaux pour l\'overlay :', error);
+        }
     }
     
+    function createCardElement(work) {
+        const card = document.createElement('div');
+        card.classList.add('card');
     
+        const img = document.createElement('img');
+        img.src = work.imageUrl;
+        img.alt = work.title || 'Image indisponible';
+        card.appendChild(img);
+    
+        const title = document.createElement('h3');
+        title.textContent = work.title || 'Titre indisponible';
+        card.appendChild(title);
+    
+        // Ajoutez d'autres éléments de carte comme la description, les boutons, etc. si nécessaire
+    
+        return card;
+    }
 
     function logoutUser() {
         localStorage.removeItem('authToken');
