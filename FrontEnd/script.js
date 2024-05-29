@@ -104,6 +104,7 @@ function filterWorks(categoryId) {
         .catch(error => console.error('Erreur lors du filtrage des travaux :', error));
 }
 
+
 document.addEventListener('DOMContentLoaded', () => {
     fetchWorks();
     fetchCategories();
@@ -162,6 +163,19 @@ document.addEventListener('DOMContentLoaded', () => {
     
         const filterContainer = document.getElementById('filter-container');
         filterContainer.style.display = 'none';
+
+        editBanner.addEventListener('click', function() {
+            document.getElementById('overlay').style.display = 'flex';
+            
+        });
+
+        modifyButton.addEventListener('click', function() {
+            document.getElementById('overlay').style.display = 'flex';
+        });
+
+        document.getElementById('closeOverlay').addEventListener('click', function() {
+            document.getElementById('overlay').style.display = 'none';
+        })
     
         loginButton.textContent = 'logout';
         loginButton.classList.remove('bold');
@@ -169,6 +183,8 @@ document.addEventListener('DOMContentLoaded', () => {
         loginButton.removeEventListener('click', showLoginOverlay);
         loginButton.addEventListener('click', logoutUser);
     }
+    
+    
 
     function logoutUser() {
         localStorage.removeItem('authToken');
@@ -179,7 +195,6 @@ document.addEventListener('DOMContentLoaded', () => {
         hidePageElements();
         loginSection.style.display = 'block';
     }
-    
     
     // Si l'utilisateur est déjà connecté, activer le mode édition
     const authToken = localStorage.getItem('authToken');
