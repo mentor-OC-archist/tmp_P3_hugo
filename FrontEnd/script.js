@@ -1,4 +1,4 @@
-import MyClass from "./assets/js/MyClass.js"
+//import MyClass from "./assets/js/MyClass.js"
 
 // Définition des endpoints pour les travaux et les catégories
 const worksEndpoint = 'http://localhost:5678/api/works';
@@ -147,22 +147,25 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function activateEditMode() {
-        const editBanner = document.createElement('div');
+        const editBanner = document.createElement('button'); // Modifier la création pour un bouton
+        const icon = document.createElement('i');
         editBanner.id = 'editBanner';
-        editBanner.textContent = 'Mode Édition';
+        editBanner.innerHTML = '<i class="fa-regular fa-pen-to-square"></i> Mode Édition';
         document.body.insertBefore(editBanner, document.body.firstChild);
 
-        const modifyButton = document.createElement('button');
+        const modifyButton = document.createElement('button'); // Modifier la création pour un bouton
         modifyButton.id = 'modifyButton';
-        modifyButton.textContent = 'Modifier';
+        icon.classList.add('fa-regular', 'fa-pen-to-square');
+        modifyButton.appendChild(icon);
+        modifyButton.appendChild(document.createTextNode(' Modifier'));
         document.getElementById('modifyButtonContainer').appendChild(modifyButton);
-
+    
         const filterContainer = document.getElementById('filter-container');
         filterContainer.style.display = 'none';
-
+    
         loginButton.textContent = 'logout';
         loginButton.classList.remove('bold');
-
+    
         loginButton.removeEventListener('click', showLoginOverlay);
         loginButton.addEventListener('click', logoutUser);
     }
@@ -176,6 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
         hidePageElements();
         loginSection.style.display = 'block';
     }
+    
     
     // Si l'utilisateur est déjà connecté, activer le mode édition
     const authToken = localStorage.getItem('authToken');
