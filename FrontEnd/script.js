@@ -60,6 +60,7 @@ function renderWorks(works) {
 
     works.forEach(work => {
         const figure = document.createElement('figure');
+        figure.dataset.categoryId=work.category.name
         const img = document.createElement('img');
         img.src = work.imageUrl;
         img.alt = work.title || 'Titre non disponible';
@@ -93,6 +94,8 @@ function renderCategories(categories) {
 
 // Fonction pour filtrer les travaux par catégorie
 function filterWorks(categoryId) {
+    // supprimer toutes les .hide
+    // document.querySelectorALL(".gallery figure").forEach()
     fetch(worksEndpoint)
         .then(response => response.json())
         .then(works => {
@@ -148,13 +151,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     async function renderWorksInOverlay(works, overlay) {
-        const overlayContent = document.getElementById('overlayContent');
-    
+        const cardsContainer = document.getElementById('cardsContainer'); 
+        cardsContainer.innerHTML = '';
+
         works.forEach(work => {
             const card = createCardElement(work);
-            overlayContent.appendChild(card);
+            cardsContainer.appendChild(card);
         });
     }
+
+
 
     async function activateEditMode() {
         const editBanner = document.createElement('button'); // Modifier la création pour un bouton
@@ -202,6 +208,39 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Erreur lors de la récupération des travaux pour l\'overlay :', error);
         }
     }
+
+    const addPhotoButton = document.getElementById('addPhotoButton');
+    const overlayContent = document.getElementById('overlayContent');
+    const closeButton = document.getElementById('closeOverlay');
+
+    addPhotoButton.addEventListener('click', () => {
+        overlayContent.innerHTML = `
+            <button type="button" id="backButton">Retour</button>
+            <h2>Ajouter Une Photo</h2>
+            <div id="dropArea">
+                <p>Glissez vos photos ici</p>
+            </div>
+            <input type="text" id="photoTitle" placeholder="Titre de la photo">
+            <select id="categorySelect">
+                <option value="">Choisir une catégorie</option>
+                <!-- Ajoute les options de catégorie dynamiquement -->
+        </select>
+        <button type="button" id="uploadButton">Ajouter</button>
+    `;
+
+    // Code pour remplir la liste déroulante des catégories (utilise fetchCategories ou stocke les catégories localement)
+    // ...
+
+    // Code pour gérer le retour au clic sur le bouton "Retour"
+    const backButton = document.getElementById('backButton');
+    backButton.addEventListener('click', () => {
+        overlayContent.innerHTML = ''; // Efface le contenu de l'overlay
+        overlay.style.display = 'none'; // Masque l'overlay
+    });
+
+    // Code pour gérer le téléversement des photos
+    // ...
+});
     
     function createCardElement(work) {
         const card = document.createElement('div');
@@ -211,14 +250,37 @@ document.addEventListener('DOMContentLoaded', () => {
         img.src = work.imageUrl;
         img.alt = work.title || 'Image indisponible';
         card.appendChild(img);
-    
-        const title = document.createElement('h3');
-        title.textContent = work.title || 'Titre indisponible';
-        card.appendChild(title);
-    
-        // Ajoutez d'autres éléments de carte comme la description, les boutons, etc. si nécessaire
+
+        const icon = document.createElement('i');
+        icon.classList.add('fa-solid', 'fa-trash-can'); 
+        card.appendChild(icon);
+        icon.addEventListener('click',function() {
+            deleteImage(work.id);
+        });
+        
     
         return card;
+    }
+
+    async function deleteImage(imageId) {
+        try {
+            const authToken = localStorage.getItem('authToken');
+            const response = await fetch(`http://localhost:5678/api/works/${imageId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${authToken}`, // Ajoutez le jeton JWT si nécessaire
+                },
+            });
+            if (response.ok) {
+                // Suppression réussie, peut-être effectuer des actions supplémentaires comme actualiser l'interface utilisateur, etc.
+                console.log('Image supprimée avec succès');
+            } else {
+                // Gérer les erreurs de suppression d'image
+                console.error('Erreur lors de la suppression de l\'image');
+            }
+        } catch (error) {
+            console.error('Erreur lors de la suppression de l\'image :', error);
+        }
     }
 
     function logoutUser() {
