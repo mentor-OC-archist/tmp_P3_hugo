@@ -264,19 +264,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function deleteImage(imageId) {
         try {
-            const authToken = localStorage.getItem('authToken');
-            const response = await fetch(`http://localhost:5678/api/works/${imageId}`, {
-                method: 'DELETE',
-                headers: {
-                    'Authorization': `Bearer ${authToken}`, // Ajoutez le jeton JWT si nécessaire
-                },
-            });
-            if (response.ok) {
-                // Suppression réussie, peut-être effectuer des actions supplémentaires comme actualiser l'interface utilisateur, etc.
-                console.log('Image supprimée avec succès');
+            // Demander une confirmation avant de supprimer l'image
+            const confirmed = confirm("Êtes-vous sûr de vouloir supprimer cette image ?");
+    
+            // Si l'utilisateur a confirmé la suppression
+            if (confirmed) {
+                const authToken = localStorage.getItem('authToken');
+                const response = await fetch(`http://localhost:5678/api/works/${imageId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`, // Ajoutez le jeton JWT si nécessaire
+                    },
+                });
+                if (response.ok) {
+                    // Suppression réussie, peut-être effectuer des actions supplémentaires comme actualiser l'interface utilisateur, etc.
+                    console.log('Image supprimée avec succès');
+                } else {
+                    // Gérer les erreurs de suppression d'image
+                    console.error('Erreur lors de la suppression de l\'image');
+                }
             } else {
-                // Gérer les erreurs de suppression d'image
-                console.error('Erreur lors de la suppression de l\'image');
+                // Si l'utilisateur a annulé la suppression, ne rien faire
+                console.log('Suppression annulée par l\'utilisateur');
             }
         } catch (error) {
             console.error('Erreur lors de la suppression de l\'image :', error);

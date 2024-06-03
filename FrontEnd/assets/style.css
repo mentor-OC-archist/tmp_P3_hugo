@@ -423,7 +423,7 @@ hr {
 .card i {
 	position: absolute; /* Positionne l'icône par rapport à la carte */
     top: 4px;
-    right: 89px; /* Ajuste la position horizontale de l'icône */
+    right: 60px; /* Ajuste la position horizontale de l'icône */
     padding: 4px; /* Ajoute un remplissage pour un meilleur aspect */
     background-color: #000000; /* Couleur de fond de l'icône */
 	border-radius: 20%;
