@@ -17,6 +17,7 @@ export default class APIClass extends DOMClass{
     // - TOUTES LES INSTANCES DE CETTE CLASSE, OU DE LA CLASSE PARENTE
     #works_endpoint = "http://localhost:5678/api/works"
     #categories_endpoint = "http://localhost:5678/api/categories"
+    login_endpoint = "http://localhost:5678/api/users/login"
     works = [] // 
     categories = []
 
@@ -40,17 +41,15 @@ export default class APIClass extends DOMClass{
      * RÉCUPÉRER DE L'API LES WORKS, SUR LE ENDPOINT http://localhost:5678/api/works"
      * @param {CONTIENT LES DIFFÉRENTES CATÉGORIES (PAR DÉFAUT parameter VAUT undefined)} 
      */
-    getWorks(parameter) {
-
-        // SI parameter VAUT undefined (L'OPÉRATION DE GAUCHE), ALORS RÉCUPÉRER L'OPÉRATION DE DROITE
-        console.log(parameter||this.#works_endpoint)
-        
-        fetch(parameter||this.#works_endpoint)
-            .then(response => response.json())
-            .then(this.renderWorksCards)
-            .catch((error) => {
-                console.error("Erreur lors de la récupération des données :", error)
-            })
+    getWorks = async (parameter) => {
+        console.log(this.works_endpoint)
+        try {
+            const response = await fetch(this.#works_endpoint);
+            const works = await response.json();
+            this.renderWorksCards(works);
+        } catch (error) {
+            console.error('Erreur lors de la récupération des travaux :', error);
+        }
     }
     
     /**
@@ -62,22 +61,13 @@ export default class APIClass extends DOMClass{
      * @param {CONTIENT LES DIFFÉRENTES CATÉGORIES (PAR DÉFAUT parameter VAUT undefined)} 
      */
     async getCategories(parameter) {
-
-        // SI parameter VAUT undefined (L'OPÉRATION DE GAUCHE), ALORS RÉCUPÉRER L'OPÉRATION DE DROITE
-        console.log(parameter||this.#categories_endpoint)
-
-        // JE RÉCUPÈRE LES DONNÉES DU RÉSEAU DANS data
-        // PUIS JE LES TRANSFORMENT EN JSON DANS categories
-        // EN UTILISANT LE MOT-CLÉ "await"
-        let data = await fetch(parameter||this.#categories_endpoint)
-        , categories = await data.json()
-
-        // J'APPELLE LA MÉTHODE DE LA CLASSE PARENTE DOMClass: DOMClass.renderFilterGallery
-        // PS: j'utilise this, car this. fait référence à l'objet APIClass, 
-        // qui est enfant de DOMClass, 
-        // donc toutes les propriétés et méthodes de DOMClass sont disponible pour APIClass. 
-        // Ceci n'est pas réciproque. La méthode APIClass.renderFilterGallery() n'est pas accéssible dans DOMClass.
-        this.renderFilterGallery(categories)
+        try {
+            const response = await fetch(this.#categories_endpoint);
+            const categories = await response.json();
+            this.renderFilterGallery(categories);
+        } catch (error) {
+            console.error('Erreur lors de la récupération des catégories :', error);
+        }
 
     }
     
